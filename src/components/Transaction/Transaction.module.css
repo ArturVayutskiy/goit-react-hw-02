@@ -1,0 +1,22 @@
+.table {
+    table-layout: fixed;
+    width: 500px;
+    border-collapse: collapse;
+    border: 3px solid rgb(7, 6, 7);
+    
+}
+
+th {
+    background-color: rgb(75, 74, 74);
+}  
+
+td {
+    color: black;
+    border: 2px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+.tableBorder {
+    font-size: 25px;
+}
