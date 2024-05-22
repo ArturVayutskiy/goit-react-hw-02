@@ -1,23 +1,56 @@
 import "./App.css";
-import Profile from "../Profile/Profile";
-import userData from "../../userDate.json";
-import FriendList from "../Friends/FriendList";
-import friends from "../../friends.json";
-import transactions from "../../transactions.json";
-import TransactionHistory from "../Transaction/TransactionHistory";
+import Options from "../Options/Options";
+import Feedback from "../Feedback/Feedback";
+import { useState, useEffect } from "react";
+import Notification from "../Notification/Notification";
+import Description from "../Description/Description";
 
 export default function App() {
+  const [feedback, setFeedback] = useState({ good: 0, neutral: 0, bad: 0 });
+
+  useEffect(() => {
+    const savedFeedback = JSON.parse(localStorage.getItem("feedback"));
+    if (savedFeedback) {
+      setFeedback(savedFeedback);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("feedback", JSON.stringify(feedback));
+  }, [feedback]);
+
+  const updateFeedback = (feedbackType) => {
+    setFeedback((prevFeedback) => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
+    }));
+  };
+
+  const resetFeedback = () => {
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  };
+
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const positiveFeedbackPercentage =
+    Math.round((feedback.good / totalFeedback) * 100) || 0;
+
   return (
-    <>
-      <Profile
-        name={userData.username}
-        tag={userData.tag}
-        location={userData.location}
-        image={userData.avatar}
-        stats={userData.stats}
+    <div>
+      <Description />
+      <Options
+        updateFeedback={updateFeedback}
+        resetFeedback={resetFeedback}
+        totalFeedback={totalFeedback}
       />
-      <FriendList friends={friends} />
-      <TransactionHistory items={transactions} />
-    </>
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedback={feedback}
+          total={totalFeedback}
+          positivePercentage={positiveFeedbackPercentage}
+        />
+      ) : (
+        <Notification message="No feedback given" />
+      )}
+    </div>
   );
 }
