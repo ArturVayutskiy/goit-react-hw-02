@@ -6,7 +6,7 @@ const Feedback = ({ feedback, totalFeedback, positiveFeedback }) => {
       <p>Neutral: {feedback.neutral}</p>
       <p>Bad: {feedback.bad}</p>
       <p>Total: {totalFeedback}</p>
-      <p>Positive feedback: {positiveFeedback}%</p>
+      <p>Positive : {positiveFeedback}%</p>
     </div>
   );
 };
