@@ -1,6 +1,8 @@
+import css from "./Options.module.css";
+
 const Options = ({ updateFeedback, resetFeedback, totalFeedback }) => {
   return (
-    <div>
+    <div className={css.optionBlock}>
       <button onClick={() => updateFeedback("good")}>Good</button>
       <button onClick={() => updateFeedback("neutral")}>Neutral</button>
       <button onClick={() => updateFeedback("bad")}>Bad</button>
